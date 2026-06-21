@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = "No Orphanage Assigned";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-6 text-center">
+        <div class="card shadow-sm">
+            <div class="card-body p-5">
+
+                <div style="width:80px;height:80px;border-radius:50%;
+                            background:#FFF3E0;display:flex;
+                            align-items:center;justify-content:center;
+                            margin:0 auto 1.5rem;">
+                    <i class="bi bi-house-x-fill"
+                       style="font-size:2.5rem;color:#E65100;"></i>
+                </div>
+
+                <h4 class="fw-bold mb-2" style="color:#E65100;">
+                    No Orphanage Assigned
+                </h4>
+                <p class="text-muted mb-4">
+                    Your account has not been assigned to an orphanage yet.
+                    Please contact the Super Administrator to get assigned
+                    to your orphanage.
+                </p>
+
+                <div class="alert alert-info text-start small">
+                    <i class="bi bi-info-circle me-2"></i>
+                    <strong>What to do:</strong> Contact
+                    <a href="mailto:superadmin@orphantrust.tz"
+                       class="alert-link">
+                        superadmin@orphantrust.tz
+                    </a>
+                    and provide your registered email address.
+                    The admin will assign you to your orphanage.
+                </div>
+
+                <a href="@Url.Action("Login","Account")"
+                   class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left me-2"></i>Back to Login
+                </a>
+
+            </div>
+        </div>
+    </div>
+</div>

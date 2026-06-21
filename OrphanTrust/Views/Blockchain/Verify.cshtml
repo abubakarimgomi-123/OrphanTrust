@@ -1,0 +1,177 @@
+﻿@{
+    ViewBag.Title = "Verify Transaction";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    bool found = ViewBag.Found == true;
+    bool isOrphanage = ViewBag.IsOrphanage == true;
+    string txHash = ViewBag.TxHash;
+    string explorerUrl = ViewBag.ExplorerUrl;
+}
+
+<div class="page-header">
+    <h2><i class="bi bi-shield-check me-2"></i>Verify on Blockchain</h2>
+    <p class="text-muted mb-0 small">
+        Verify any donation on Avalanche Fuji Testnet
+    </p>
+</div>
+
+<div class="row">
+    <div class="col-md-7">
+        <div class="card mb-4">
+            <div class="card-header py-3">
+                <i class="bi bi-search me-2 text-success"></i>
+                Enter Transaction Hash
+            </div>
+            <div class="card-body p-4">
+                @using (Html.BeginForm("Verify", "Blockchain",
+                    FormMethod.Post))
+                {
+                    <div class="mb-3">
+                        <label class="form-label fw-medium">
+                            Transaction Hash (TxHash)
+                        </label>
+                        <input type="text" name="txHash"
+                               class="form-control"
+                               value="@txHash"
+                               placeholder="0x..." />
+                    </div>
+                    <button type="submit"
+                            class="btn btn-primary w-100 py-2">
+                        <i class="bi bi-search me-2"></i>
+                        Verify Transaction
+                    </button>
+                }
+            </div>
+        </div>
+
+        @if (txHash != null && found)
+        {
+            <div class="card border-success">
+                <div class="card-header py-3 bg-success text-white">
+                    <i class="bi bi-check-circle me-2"></i>
+                    Transaction Verified on Avalanche!
+                </div>
+                <div class="card-body">
+                    @if (isOrphanage)
+                    {
+                        <table class="table table-borderless">
+                            <tr>
+                                <td class="text-muted">Type</td>
+                                <td class="fw-bold">
+                                    Orphanage Verification
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Orphanage</td>
+                                <td class="fw-bold">
+                                    @ViewBag.OrphanageName
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Status</td>
+                                <td>
+                                    <span class="badge bg-success">
+                                        @ViewBag.Status
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Date</td>
+                                <td>@ViewBag.Date</td>
+                            </tr>
+                        </table>
+                    }
+                    else
+                    {
+                        <table class="table table-borderless">
+                            <tr>
+                                <td class="text-muted">Type</td>
+                                <td class="fw-bold">Donation</td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Donation ID</td>
+                                <td class="fw-bold">
+                                    #@ViewBag.DonationId
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Orphanage</td>
+                                <td class="fw-bold">
+                                    @ViewBag.OrphanageName
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Amount</td>
+                                <td class="fw-bold text-success">
+                                    @ViewBag.Currency
+                                    @String.Format("{0:N0}",
+                                        ViewBag.Amount)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Status</td>
+                                <td>
+                                    <span class="badge bg-success">
+                                        @ViewBag.Status
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Date</td>
+                                <td>@ViewBag.Date</td>
+                            </tr>
+                        </table>
+                    }
+
+                    <a href="@explorerUrl" target="_blank"
+                       class="btn btn-success w-100 mt-2">
+                        <i class="bi bi-box-arrow-up-right me-2"></i>
+                        View on Snowtrace Explorer
+                    </a>
+                </div>
+            </div>
+        }
+
+        @if (txHash != null && !found)
+        {
+            <div class="alert alert-warning">
+                <i class="bi bi-exclamation-triangle me-2"></i>
+                Transaction not found in our database.
+                <a href="@explorerUrl" target="_blank"
+                   class="alert-link ms-2">
+                    View on Snowtrace →
+                </a>
+            </div>
+        }
+    </div>
+
+    <div class="col-md-5">
+        <div class="card"
+             style="background:linear-gradient(135deg,#1B5E20,#2E7D32);
+                    color:#fff;">
+            <div class="card-body p-4">
+                <h5 class="fw-bold mb-3">
+                    <i class="bi bi-link-45deg me-2"></i>
+                    Avalanche Fuji Network
+                </h5>
+                <div class="small mb-2">
+                    <i class="bi bi-check-circle me-2"></i>
+                    Chain ID: 43113
+                </div>
+                <div class="small mb-2">
+                    <i class="bi bi-check-circle me-2"></i>
+                    Network: Fuji Testnet
+                </div>
+                <div class="small mb-3">
+                    <i class="bi bi-check-circle me-2"></i>
+                    DonationRegistry Contract Active
+                </div>
+                <a href="https://testnet.snowtrace.io"
+                   target="_blank"
+                   class="btn btn-warning w-100">
+                    <i class="bi bi-box-arrow-up-right me-2"></i>
+                    Open Snowtrace Explorer
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

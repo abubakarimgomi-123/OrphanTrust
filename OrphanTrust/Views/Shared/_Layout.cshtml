@@ -1,0 +1,339 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title - OrphanTrust</title>
+
+    <!-- Bootstrap 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+          rel="stylesheet" />
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+          rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet" />
+
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+
+        :root {
+            --primary: #2E7D32;
+            --primary-dark: #1B5E20;
+            --accent: #FF8F00;
+            --light-bg: #F8FBF8;
+        }
+
+        body {
+            background-color: var(--light-bg);
+        }
+
+        /* Navbar */
+        .navbar-brand span.brand-trust {
+            color: var(--accent);
+        }
+
+        .navbar {
+            background: var(--primary) !important;
+        }
+
+            .navbar .nav-link {
+                color: rgba(255,255,255,0.9) !important;
+                font-size: 0.9rem;
+            }
+
+                .navbar .nav-link:hover {
+                    color: #fff !important;
+                }
+
+        /* Sidebar */
+        .sidebar {
+            min-height: calc(100vh - 56px);
+            background: #fff;
+            border-right: 1px solid #e0e0e0;
+            padding-top: 1.5rem;
+            position: fixed;
+            width: 240px;
+            top: 56px;
+            left: 0;
+            overflow-y: auto;
+            z-index: 100;
+        }
+
+            .sidebar .nav-link {
+                color: #444;
+                padding: 0.6rem 1.5rem;
+                font-size: 0.875rem;
+                border-radius: 0;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+                .sidebar .nav-link:hover,
+                .sidebar .nav-link.active {
+                    background: #E8F5E9;
+                    color: var(--primary);
+                    border-left: 3px solid var(--primary);
+                }
+
+                .sidebar .nav-link i {
+                    font-size: 1rem;
+                    width: 20px;
+                }
+
+        .sidebar-section {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #9e9e9e;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 1rem 1.5rem 0.3rem;
+        }
+
+        /* Main content */
+        .main-content {
+            margin-left: 240px;
+            padding: 2rem;
+            min-height: calc(100vh - 56px);
+        }
+
+        /* Cards */
+        .stat-card {
+            border: none;
+            border-radius: 12px;
+            padding: 1.5rem;
+            color: #fff;
+        }
+
+            .stat-card .stat-number {
+                font-size: 2rem;
+                font-weight: 700;
+            }
+
+            .stat-card .stat-label {
+                font-size: 0.85rem;
+                opacity: 0.85;
+            }
+
+        .card {
+            border: 1px solid #e8f5e9;
+            border-radius: 12px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+        }
+
+        .card-header {
+            background: #fff;
+            border-bottom: 1px solid #e8f5e9;
+            font-weight: 600;
+            border-radius: 12px 12px 0 0 !important;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+            .btn-primary:hover {
+                background: var(--primary-dark);
+                border-color: var(--primary-dark);
+            }
+
+        /* Alerts */
+        .alert {
+            border-radius: 10px;
+            border: none;
+        }
+
+        /* Page header */
+        .page-header {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #e8f5e9;
+        }
+
+            .page-header h2 {
+                font-weight: 600;
+                color: #1B5E20;
+                margin: 0;
+            }
+
+        /* No sidebar pages */
+        .full-content {
+            padding: 2rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-dark);
+            color: rgba(255,255,255,0.8);
+            padding: 1rem 0;
+            font-size: 0.85rem;
+            margin-left: 240px;
+        }
+
+        .no-sidebar footer {
+            margin-left: 0;
+        }
+
+        @@media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            footer {
+                margin-left: 0;
+            }
+        }
+    </style>
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("styles", required: false)
+</head>
+<body>
+
+    <!-- TOP NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid px-3">
+            <a class="navbar-brand fw-bold" href="@Url.Action("Index","Home")">
+                <i class="bi bi-heart-fill me-1"></i>
+                Orphan<span class="brand-trust">Trust</span>
+            </a>
+            <button class="navbar-toggler" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    @if (!User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Index","Home")">
+                                <i class="bi bi-house me-1"></i>Home
+                            </a>
+                        </li>
+                    }
+                </ul>
+                <ul class="navbar-nav ms-auto align-items-center gap-2">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle d-flex align-items-center gap-2"
+                               href="#" data-bs-toggle="dropdown">
+                                <div style="width:32px;height:32px;border-radius:50%;
+                                        background:#FF8F00;display:flex;
+                                        align-items:center;justify-content:center;
+                                        font-weight:600;font-size:0.8rem;color:#fff;">
+                                    @((User.Identity.Name != null ? User.Identity.Name.Length : 0) > 0
+                                    ? User.Identity.Name.Substring(0,1).ToUpper()
+                                    : "U")
+                                </div>
+                                @User.Identity.Name
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                    <a class="dropdown-item" href="@Url.Action("Index","Dashboard")">
+                                        <i class="bi bi-speedometer2 me-2"></i>Dashboard
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider" /></li>
+                                <li>
+                                    @using (Html.BeginForm("Logout", "Account",
+                                        FormMethod.Post, new { id = "logoutForm" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="dropdown-item text-danger">
+                                            <i class="bi bi-box-arrow-right me-2"></i>Sign Out
+                                        </button>
+                                    }
+                                </li>
+                            </ul>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Login","Account")">
+                                <i class="bi bi-box-arrow-in-right me-1"></i>Login
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-warning btn-sm px-3"
+                               href="@Url.Action("Register","Account")">
+                                <i class="bi bi-person-plus me-1"></i>Register
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- SIDEBAR (only for authenticated users) -->
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="sidebar" id="sidebar">
+            @Html.Partial("_Sidebar")
+        </div>
+    }
+
+    <!-- MAIN CONTENT -->
+    <div class="@(User.Identity.IsAuthenticated ? "main-content" : "full-content")">
+
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="bi bi-check-circle me-2"></i>@TempData["Success"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        }
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="bi bi-exclamation-circle me-2"></i>@TempData["Error"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        }
+        @if (TempData["Warning"] != null)
+        {
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <i class="bi bi-exclamation-triangle me-2"></i>@TempData["Warning"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        }
+
+        @RenderBody()
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="@(User.Identity.IsAuthenticated ? "" : "no-sidebar")">
+        <div class="container-fluid px-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <span>
+                    &copy; @DateTime.Now.Year OrphanTrust —
+                    Transparency Platform for Tanzania
+                </span>
+                <span>
+                    Built with <i class="bi bi-heart-fill text-danger"></i>
+                    for Tanzania's children
+                </span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    @Scripts.Render("~/bundles/jquery")
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>

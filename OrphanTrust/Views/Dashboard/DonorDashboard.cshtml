@@ -1,0 +1,195 @@
+﻿@{
+    ViewBag.Title = "Donor Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-header d-flex justify-content-between align-items-center">
+    <div>
+        <h2><i class="bi bi-heart-pulse me-2"></i>My Donor Dashboard</h2>
+        <p class="text-muted mb-0 small">
+            Track your donations and impact —
+            @DateTime.Now.ToString("dddd, MMMM dd yyyy")
+        </p>
+    </div>
+    <a href="@Url.Action("Index","Orphanages")"
+       class="btn btn-primary">
+        <i class="bi bi-plus-circle me-1"></i>Make a Donation
+    </a>
+</div>
+
+<!-- Stat Cards -->
+<div class="row g-3 mb-4">
+    <div class="col-md-4 col-sm-6">
+        <div class="stat-card"
+             style="background:linear-gradient(135deg,#2E7D32,#43A047);">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <div class="stat-label">My Donations</div>
+                    <div class="stat-number">@ViewBag.TotalDonations</div>
+                </div>
+                <i class="bi bi-cash-coin"
+                   style="font-size:2.5rem;opacity:0.3;"></i>
+            </div>
+            <div class="mt-2" style="font-size:0.8rem;opacity:0.8;">
+                <i class="bi bi-check-circle me-1"></i>
+                Total donations made
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 col-sm-6">
+        <div class="stat-card"
+             style="background:linear-gradient(135deg,#E65100,#F57C00);">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <div class="stat-label">Total Contributed</div>
+                    <div class="stat-number" style="font-size:1.5rem;">
+                        TZS @String.Format("{0:N0}", ViewBag.TotalAmount)
+                    </div>
+                </div>
+                <i class="bi bi-currency-exchange"
+                   style="font-size:2.5rem;opacity:0.3;"></i>
+            </div>
+            <div class="mt-2" style="font-size:0.8rem;opacity:0.8;">
+                <i class="bi bi-graph-up me-1"></i>
+                Confirmed donations
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 col-sm-6">
+        <div class="stat-card"
+             style="background:linear-gradient(135deg,#1565C0,#1976D2);">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <div class="stat-label">Orphanages Supported</div>
+                    <div class="stat-number">@ViewBag.OrphanagesSupported</div>
+                </div>
+                <i class="bi bi-house-heart"
+                   style="font-size:2.5rem;opacity:0.3;"></i>
+            </div>
+            <div class="mt-2" style="font-size:0.8rem;opacity:0.8;">
+                <i class="bi bi-geo-alt me-1"></i>
+                Across Tanzania
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="row g-3 mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header py-3">
+                <i class="bi bi-lightning-fill me-2 text-warning"></i>
+                Quick Actions
+            </div>
+            <div class="card-body">
+                <div class="row g-2">
+                    <div class="col-md-3 col-sm-6">
+                        <a href="@Url.Action("Index","Orphanages")"
+                           class="btn btn-outline-success w-100 py-3
+                                  d-flex flex-column align-items-center gap-1">
+                            <i class="bi bi-house-heart"
+                               style="font-size:1.5rem;"></i>
+                            <small>Browse Orphanages</small>
+                        </a>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <a href="@Url.Action("MyDonations","Donations")"
+                           class="btn btn-outline-primary w-100 py-3
+                                  d-flex flex-column align-items-center gap-1">
+                            <i class="bi bi-receipt"
+                               style="font-size:1.5rem;"></i>
+                            <small>My Donations</small>
+                        </a>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <a href="@Url.Action("Verify","Blockchain")"
+                           class="btn btn-outline-warning w-100 py-3
+                                  d-flex flex-column align-items-center gap-1">
+                            <i class="bi bi-shield-check"
+                               style="font-size:1.5rem;"></i>
+                            <small>Verify on Chain</small>
+                        </a>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <a href="@Url.Action("MyImpact","Donations")"
+                           class="btn btn-outline-info w-100 py-3
+                                  d-flex flex-column align-items-center gap-1">
+                            <i class="bi bi-bar-chart"
+                               style="font-size:1.5rem;"></i>
+                            <small>My Impact</small>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- How it works -->
+<div class="card">
+    <div class="card-header py-3">
+        <i class="bi bi-info-circle me-2 text-info"></i>
+        How OrphanTrust Works
+    </div>
+    <div class="card-body">
+        <div class="row g-4 text-center">
+            <div class="col-md-3">
+                <div style="width:60px;height:60px;border-radius:50%;
+                            background:#E8F5E9;display:flex;
+                            align-items:center;justify-content:center;
+                            margin:0 auto 1rem;">
+                    <i class="bi bi-search"
+                       style="font-size:1.5rem;color:#2E7D32;"></i>
+                </div>
+                <h6 class="fw-semibold">1. Browse</h6>
+                <p class="text-muted small">
+                    Find verified orphanages and their specific needs
+                </p>
+            </div>
+            <div class="col-md-3">
+                <div style="width:60px;height:60px;border-radius:50%;
+                            background:#FFF3E0;display:flex;
+                            align-items:center;justify-content:center;
+                            margin:0 auto 1rem;">
+                    <i class="bi bi-cash-coin"
+                       style="font-size:1.5rem;color:#E65100;"></i>
+                </div>
+                <h6 class="fw-semibold">2. Donate</h6>
+                <p class="text-muted small">
+                    Make a secure donation to a specific orphanage or need
+                </p>
+            </div>
+            <div class="col-md-3">
+                <div style="width:60px;height:60px;border-radius:50%;
+                            background:#E3F2FD;display:flex;
+                            align-items:center;justify-content:center;
+                            margin:0 auto 1rem;">
+                    <i class="bi bi-link-45deg"
+                       style="font-size:1.5rem;color:#1565C0;"></i>
+                </div>
+                <h6 class="fw-semibold">3. Recorded on Chain</h6>
+                <p class="text-muted small">
+                    Your donation is recorded on Avalanche blockchain
+                    — immutably and transparently
+                </p>
+            </div>
+            <div class="col-md-3">
+                <div style="width:60px;height:60px;border-radius:50%;
+                            background:#F3E5F5;display:flex;
+                            align-items:center;justify-content:center;
+                            margin:0 auto 1rem;">
+                    <i class="bi bi-shield-check"
+                       style="font-size:1.5rem;color:#6A1B9A;"></i>
+                </div>
+                <h6 class="fw-semibold">4. Verify Impact</h6>
+                <p class="text-muted small">
+                    Track how your donation was distributed
+                    and verify it anytime on-chain
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

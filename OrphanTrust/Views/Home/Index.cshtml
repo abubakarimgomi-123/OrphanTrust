@@ -1,0 +1,243 @@
+﻿@model IEnumerable<OrphanTrust.Models.DomainModels.Orphanage>
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Hero Section -->
+<div style="background:linear-gradient(135deg,#1B5E20,#2E7D32);
+            color:#fff;padding:5rem 2rem;text-align:center;
+            margin:-2rem -2rem 2rem -2rem;">
+    <div class="container">
+        <h1 class="display-4 fw-bold mb-3">
+            <i class="bi bi-heart-fill me-2" style="color:#FF8F00;"></i>
+            Transparent Giving for Tanzania's Children
+        </h1>
+        <p class="lead mb-4" style="opacity:0.9;max-width:600px;margin:0 auto 2rem;">
+            OrphanTrust uses blockchain technology to ensure every donation
+            reaches the children who need it most — transparently and
+            accountably.
+        </p>
+        <div class="d-flex gap-3 justify-content-center flex-wrap">
+            <a href="@Url.Action("Register","Account")"
+               class="btn btn-warning btn-lg px-4 fw-semibold">
+                <i class="bi bi-heart me-2"></i>Start Donating
+            </a>
+            <a href="#orphanages"
+               class="btn btn-outline-light btn-lg px-4">
+                <i class="bi bi-search me-2"></i>Browse Orphanages
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Stats Bar -->
+<div class="card mb-4 border-0 shadow-sm">
+    <div class="card-body py-3">
+        <div class="row text-center g-3">
+            <div class="col-md-3 col-6">
+                <div class="fw-bold fs-3" style="color:#2E7D32;">
+                    @ViewBag.TotalOrphanages
+                </div>
+                <div class="text-muted small">Verified Orphanages</div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="fw-bold fs-3" style="color:#2E7D32;">
+                    @ViewBag.TotalChildren
+                </div>
+                <div class="text-muted small">Children Supported</div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="fw-bold fs-3" style="color:#2E7D32;">
+                    @ViewBag.TotalDonors
+                </div>
+                <div class="text-muted small">Registered Donors</div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="fw-bold fs-3" style="color:#2E7D32;">
+                    TZS @String.Format("{0:N0}", ViewBag.TotalDonations)
+                </div>
+                <div class="text-muted small">Total Donated</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- How It Works -->
+<div class="mb-5">
+    <h3 class="fw-bold text-center mb-4" style="color:#1B5E20;">
+        How OrphanTrust Works
+    </h3>
+    <div class="row g-4">
+        <div class="col-md-3 text-center">
+            <div style="width:70px;height:70px;border-radius:50%;
+                        background:#E8F5E9;display:flex;
+                        align-items:center;justify-content:center;
+                        margin:0 auto 1rem;">
+                <i class="bi bi-patch-check-fill"
+                   style="font-size:2rem;color:#2E7D32;"></i>
+            </div>
+            <h6 class="fw-semibold">Verified Orphanages</h6>
+            <p class="text-muted small">
+                Every orphanage is verified by our admin team
+                before appearing on the platform
+            </p>
+        </div>
+        <div class="col-md-3 text-center">
+            <div style="width:70px;height:70px;border-radius:50%;
+                        background:#FFF3E0;display:flex;
+                        align-items:center;justify-content:center;
+                        margin:0 auto 1rem;">
+                <i class="bi bi-cash-coin"
+                   style="font-size:2rem;color:#E65100;"></i>
+            </div>
+            <h6 class="fw-semibold">Secure Donations</h6>
+            <p class="text-muted small">
+                Donate directly to specific orphanages
+                or fund specific needs
+            </p>
+        </div>
+        <div class="col-md-3 text-center">
+            <div style="width:70px;height:70px;border-radius:50%;
+                        background:#E3F2FD;display:flex;
+                        align-items:center;justify-content:center;
+                        margin:0 auto 1rem;">
+                <i class="bi bi-link-45deg"
+                   style="font-size:2rem;color:#1565C0;"></i>
+            </div>
+            <h6 class="fw-semibold">Blockchain Recorded</h6>
+            <p class="text-muted small">
+                Every donation is recorded on the Avalanche
+                blockchain — permanent and tamper-proof
+            </p>
+        </div>
+        <div class="col-md-3 text-center">
+            <div style="width:70px;height:70px;border-radius:50%;
+                        background:#F3E5F5;display:flex;
+                        align-items:center;justify-content:center;
+                        margin:0 auto 1rem;">
+                <i class="bi bi-shield-check"
+                   style="font-size:2rem;color:#6A1B9A;"></i>
+            </div>
+            <h6 class="fw-semibold">Full Transparency</h6>
+            <p class="text-muted small">
+                Track exactly how your donation was used
+                with evidence and blockchain proof
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- Orphanages Section -->
+<div id="orphanages">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="fw-bold mb-0" style="color:#1B5E20;">
+            <i class="bi bi-house-heart me-2"></i>
+            Verified Orphanages
+        </h3>
+        <a href="@Url.Action("Index","Orphanages")"
+           class="btn btn-outline-success btn-sm">
+            View All <i class="bi bi-arrow-right ms-1"></i>
+        </a>
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="row g-3">
+            @foreach (var orphanage in Model)
+            {
+                <div class="col-md-4 col-sm-6">
+                    <div class="card h-100">
+                        <!-- Logo/Header -->
+                        <div style="height:120px;background:linear-gradient(
+                                    135deg,#2E7D32,#43A047);
+                                    display:flex;align-items:center;
+                                    justify-content:center;
+                                    border-radius:12px 12px 0 0;">
+                            @if (!string.IsNullOrEmpty(orphanage.LogoUrl))
+                            {
+                                <img src="@orphanage.LogoUrl"
+                                     style="max-height:80px;border-radius:8px;" />
+                            }
+                            else
+                            {
+                                <i class="bi bi-house-heart-fill text-white"
+                                   style="font-size:3rem;opacity:0.7;"></i>
+                            }
+                        </div>
+
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between
+                                        align-items-start mb-2">
+                                <h6 class="fw-bold mb-0">@orphanage.Name</h6>
+                                @if (orphanage.IsVerifiedOnChain)
+                                {
+                                    <span class="badge bg-success"
+                                          title="Verified on blockchain">
+                                        <i class="bi bi-shield-check"></i>
+                                    </span>
+                                }
+                            </div>
+                            <div class="text-muted small mb-2">
+                                <i class="bi bi-geo-alt me-1"></i>
+                                @orphanage.Region
+                            </div>
+                            @if (!string.IsNullOrEmpty(orphanage.Description))
+                            {
+                                <p class="text-muted small mb-3">
+                                    @(orphanage.Description.Length > 100
+                                        ? orphanage.Description.Substring(0, 100) + "..."
+                                        : orphanage.Description)
+                                </p>
+                            }
+                        </div>
+
+                        <div class="card-footer bg-white border-top-0 pb-3">
+                            <a href="@Url.Action("Details","Orphanages",
+                                       new { id = orphanage.OrphanageId })"
+                               class="btn btn-outline-success btn-sm w-100">
+                                <i class="bi bi-eye me-1"></i>View & Donate
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="text-center py-5">
+            <i class="bi bi-house-heart"
+               style="font-size:4rem;color:#c8e6c9;"></i>
+            <p class="text-muted mt-3">
+                No orphanages available yet. Check back soon.
+            </p>
+            <a href="@Url.Action("Login","Account")"
+               class="btn btn-primary">
+                <i class="bi bi-box-arrow-in-right me-1"></i>Login to Continue
+            </a>
+        </div>
+    }
+</div>
+
+<!-- CTA Section -->
+<div class="card mt-5 border-0"
+     style="background:linear-gradient(135deg,#1B5E20,#2E7D32);color:#fff;">
+    <div class="card-body py-5 text-center">
+        <h3 class="fw-bold mb-3">Ready to Make a Difference?</h3>
+        <p class="mb-4" style="opacity:0.9;">
+            Join hundreds of donors helping Tanzania's orphaned children
+            through transparent, blockchain-verified giving.
+        </p>
+        <div class="d-flex gap-3 justify-content-center flex-wrap">
+            <a href="@Url.Action("Register","Account")"
+               class="btn btn-warning btn-lg px-4 fw-semibold">
+                <i class="bi bi-person-plus me-2"></i>Create Free Account
+            </a>
+            <a href="@Url.Action("Login","Account")"
+               class="btn btn-outline-light btn-lg px-4">
+                <i class="bi bi-box-arrow-in-right me-2"></i>Sign In
+            </a>
+        </div>
+    </div>
+</div>

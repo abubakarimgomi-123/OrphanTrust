@@ -1,0 +1,142 @@
+﻿@model OrphanTrust.Models.DomainModels.Donation
+@{
+    ViewBag.Title = "Donation Receipt";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-7">
+
+        <div class="card shadow-sm">
+            <div class="card-body p-0">
+
+                <!-- Header -->
+                <div style="background:linear-gradient(135deg,#2E7D32,#43A047);
+                            color:#fff;padding:2rem;border-radius:12px 12px 0 0;
+                            text-align:center;">
+                    <i class="bi bi-check-circle-fill"
+                       style="font-size:3rem;"></i>
+                    <h4 class="fw-bold mt-2 mb-1">Donation Confirmed!</h4>
+                    <p style="opacity:0.9;margin:0;">
+                        Thank you for supporting Tanzania's children
+                    </p>
+                </div>
+
+                <div class="p-4">
+
+                    <!-- Blockchain badge -->
+                    @if (!string.IsNullOrEmpty(Model.TxHash))
+                    {
+                        <div class="alert alert-success text-center mb-4">
+                            <i class="bi bi-link-45deg fs-4 me-2"></i>
+                            <strong>Recorded on Avalanche Blockchain!</strong>
+                            <div class="mt-2">
+                                <small class="text-muted">
+                                    Transaction Hash:
+                                </small>
+                                <div class="fw-bold small mt-1"
+                                     style="word-break:break-all;">
+                                    @Model.TxHash
+                                </div>
+                                <a href="https://testnet.snowtrace.io/tx/@Model.TxHash"
+                                   target="_blank"
+                                   class="btn btn-success btn-sm mt-2">
+                                    <i class="bi bi-box-arrow-up-right me-1"></i>
+                                    View on Snowtrace Explorer
+                                </a>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-warning text-center mb-4">
+                            <i class="bi bi-clock me-2"></i>
+                            Blockchain recording pending...
+                        </div>
+                    }
+
+                    <!-- Receipt details -->
+                    <h6 class="fw-bold mb-3" style="color:#2E7D32;">
+                        Receipt Details
+                    </h6>
+
+                    <table class="table table-borderless">
+                        <tr>
+                            <td class="text-muted" style="width:40%;">
+                                Donation ID
+                            </td>
+                            <td class="fw-medium">
+                                #@Model.DonationId
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-muted">Amount</td>
+                            <td class="fw-bold fs-5" style="color:#2E7D32;">
+                                @Model.Currency
+                                @String.Format("{0:N2}", Model.Amount)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-muted">Orphanage</td>
+                            <td class="fw-medium">
+                                @(Model.Orphanage != null
+                                    ? Model.Orphanage.Name
+                                    : "N/A")
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-muted">Payment Method</td>
+                            <td>@Model.PaymentMethod</td>
+                        </tr>
+                        <tr>
+                            <td class="text-muted">Reference</td>
+                            <td>@Model.PaymentReference</td>
+                        </tr>
+                        <tr>
+                            <td class="text-muted">Status</td>
+                            <td>
+                                <span class="badge bg-success">
+                                    @Model.Status
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-muted">Date</td>
+                            <td>
+                                @Model.CreatedAt.ToString("MMM dd, yyyy HH:mm")
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-muted">Blockchain</td>
+                            <td>
+                                <span class="badge @(Model.BlockchainStatus == "Confirmed" ? "bg-success" : "bg-warning text-dark")">
+                                    @Model.BlockchainStatus
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+
+                    @if (!string.IsNullOrEmpty(Model.DonorMessage))
+                    {
+                        <div class="alert alert-light border mt-2">
+                            <small class="text-muted">Your message:</small>
+                            <div>@Model.DonorMessage</div>
+                        </div>
+                    }
+
+                    <div class="d-flex gap-2 mt-4">
+                        <a href="@Url.Action("MyDonations","Donations")"
+                           class="btn btn-outline-success flex-fill">
+                            <i class="bi bi-list me-1"></i>My Donations
+                        </a>
+                        <a href="@Url.Action("Index","Orphanages")"
+                           class="btn btn-primary flex-fill">
+                            <i class="bi bi-heart me-1"></i>Donate Again
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

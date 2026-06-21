@@ -1,0 +1,110 @@
+﻿@model IEnumerable<OrphanTrust.Models.DomainModels.Donation>
+@{
+    ViewBag.Title = "All Donations";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-header d-flex justify-content-between align-items-center">
+    <div>
+        <h2><i class="bi bi-cash-coin me-2"></i>All Donations</h2>
+        <p class="text-muted mb-0 small">
+            All donations with blockchain verification
+        </p>
+    </div>
+</div>
+
+@if (Model != null && Model.Any())
+{
+    <div class="card">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead style="background:#f8fdf8;">
+                        <tr>
+                            <th class="ps-4">ID</th>
+                            <th>Donor</th>
+                            <th>Orphanage</th>
+                            <th>Amount</th>
+                            <th>Method</th>
+                            <th>Blockchain</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var d in Model)
+                        {
+                            <tr>
+                                <td class="ps-4 fw-medium">
+                                    #@d.DonationId
+                                </td>
+                                <td>
+                                    @if (d.IsAnonymous)
+                                    {
+                                        <span class="text-muted">
+                                            Anonymous
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        @(d.DonorUser != null
+                                            ? d.DonorUser.FullName
+                                            : "N/A")
+                                    }
+                                </td>
+                                <td>
+                                    @(d.Orphanage != null
+                                        ? d.Orphanage.Name : "N/A")
+                                </td>
+                                <td class="fw-bold text-success">
+                                    @d.Currency
+                                    @String.Format("{0:N0}", d.Amount)
+                                </td>
+                                <td>@d.PaymentMethod</td>
+                                <td>
+                                    @if (!string.IsNullOrEmpty(d.TxHash))
+                                    {
+                                        <a href="https://testnet.snowtrace.io/tx/@d.TxHash"
+                                           target="_blank"
+                                           class="badge bg-success
+                                                  text-decoration-none">
+                                            <i class="bi bi-shield-check me-1"></i>
+                                            Confirmed
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-warning
+                                                     text-dark">
+                                            Pending
+                                        </span>
+                                    }
+                                </td>
+                                <td class="text-muted small">
+                                    @d.CreatedAt.ToString("MMM dd, yyyy")
+                                </td>
+                                <td>
+                                    <a href="@Url.Action("Receipt",
+                                               "Donations",
+                                               new { id = d.DonationId })"
+                                       class="btn btn-outline-success btn-sm">
+                                        <i class="bi bi-receipt me-1"></i>
+                                        Receipt
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="text-center py-5">
+        <i class="bi bi-cash-coin"
+           style="font-size:4rem;color:#c8e6c9;"></i>
+        <p class="text-muted mt-3">No donations yet.</p>
+    </div>
+}

@@ -1,0 +1,193 @@
+﻿@{
+    ViewBag.Title = "Make a Donation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var orphanages = ViewBag.Orphanages as
+        List<OrphanTrust.Models.DomainModels.Orphanage>;
+    int? selectedId = ViewBag.SelectedOrphanageId;
+    string contractAddress = System.Configuration.ConfigurationManager.AppSettings["DonationRegistryContractAddress"];
+}
+
+<div class="page-header">
+    <h2><i class="bi bi-heart me-2"></i>Make a Donation</h2>
+    <p class="text-muted mb-0 small">
+        Your donation is recorded on the Avalanche blockchain
+    </p>
+</div>
+
+<div class="row">
+    <div class="col-md-7">
+        <div class="card">
+            <div class="card-header py-3">
+                <i class="bi bi-cash-coin me-2 text-success"></i>
+                Donation Details
+            </div>
+            <div class="card-body p-4">
+
+                @using (Html.BeginForm("Create", "Donations", FormMethod.Post))
+                {
+                    <div class="mb-3">
+                        <label class="form-label fw-medium">
+                            Select Orphanage <span class="text-danger">*</span>
+                        </label>
+                        <select name="OrphanageId" class="form-select" required>
+                            <option value="">-- Select Orphanage --</option>
+                            @if (orphanages != null)
+                            {
+                                foreach (var o in orphanages)
+                                {
+                                    if (selectedId.HasValue &&
+                                        selectedId.Value == o.OrphanageId)
+                                    {
+                                        <option value="@o.OrphanageId" selected="selected">
+                                            @o.Name — @o.Region
+                                        </option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@o.OrphanageId">
+                                            @o.Name — @o.Region
+                                        </option>
+                                    }
+                                }
+                            }
+                        </select>
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-7">
+                            <label class="form-label fw-medium">
+                                Amount <span class="text-danger">*</span>
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text">TZS</span>
+                                <input type="number" name="Amount"
+                                       class="form-control"
+                                       placeholder="e.g. 50000"
+                                       min="1000" required />
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <label class="form-label fw-medium">Currency</label>
+                            <select name="Currency" class="form-select">
+                                <option value="TZS">TZS</option>
+                                <option value="USD">USD</option>
+                                <option value="EUR">EUR</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-medium">Payment Method</label>
+                        <select name="PaymentMethod" class="form-select">
+                            <option value="M-Pesa">M-Pesa</option>
+                            <option value="Tigo Pesa">Tigo Pesa</option>
+                            <option value="Airtel Money">Airtel Money</option>
+                            <option value="Bank Transfer">Bank Transfer</option>
+                            <option value="AVAX">AVAX (Crypto)</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-medium">
+                            Payment Reference
+                        </label>
+                        <input type="text" name="PaymentReference"
+                               class="form-control"
+                               placeholder="e.g. M-Pesa confirmation code" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-medium">
+                            Message (Optional)
+                        </label>
+                        <textarea name="DonorMessage" class="form-control"
+                                  rows="2"
+                                  placeholder="Leave a message..."></textarea>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox"
+                                   name="IsAnonymous" value="true"
+                                   id="isAnonymous" />
+                            <label class="form-check-label" for="isAnonymous">
+                                Make this donation anonymous
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-info py-2 mb-4">
+                        <i class="bi bi-link-45deg me-2"></i>
+                        <strong>Blockchain Transparency:</strong>
+                        This donation will be permanently recorded on
+                        <strong>Avalanche Fuji</strong> blockchain.
+                    </div>
+
+                    <button type="submit"
+                            class="btn btn-primary w-100 py-2 fw-semibold">
+                        <i class="bi bi-heart me-2"></i>Confirm Donation
+                    </button>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-5">
+        <div class="card mb-3"
+             style="background:linear-gradient(135deg,#2E7D32,#43A047);
+                    color:#fff;">
+            <div class="card-body p-4">
+                <h5 class="fw-bold mb-3">
+                    <i class="bi bi-shield-check me-2"></i>Why Blockchain?
+                </h5>
+                <ul class="list-unstyled small mb-0">
+                    <li class="mb-2">
+                        <i class="bi bi-check-circle me-2"></i>
+                        Immutable record — cannot be altered
+                    </li>
+                    <li class="mb-2">
+                        <i class="bi bi-check-circle me-2"></i>
+                        Publicly verifiable on Snowtrace
+                    </li>
+                    <li class="mb-2">
+                        <i class="bi bi-check-circle me-2"></i>
+                        Instant confirmation
+                    </li>
+                    <li class="mb-2">
+                        <i class="bi bi-check-circle me-2"></i>
+                        Full transparency for donors
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header py-3">
+                <i class="bi bi-info-circle me-2"></i>Network Info
+            </div>
+            <div class="card-body small">
+                <div class="d-flex justify-content-between py-1 border-bottom">
+                    <span class="text-muted">Blockchain</span>
+                    <span class="fw-medium">Avalanche Fuji</span>
+                </div>
+                <div class="d-flex justify-content-between py-1 border-bottom">
+                    <span class="text-muted">Chain ID</span>
+                    <span class="fw-medium">43113</span>
+                </div>
+                <div class="d-flex justify-content-between py-1 border-bottom">
+                    <span class="text-muted">Explorer</span>
+                    <a href="https://testnet.snowtrace.io"
+                       target="_blank" class="text-success">
+                        snowtrace.io
+                    </a>
+                </div>
+                <div class="d-flex justify-content-between py-1">
+                    <span class="text-muted">Contract</span>
+                    <small class="text-truncate" style="max-width:140px;">
+                        @contractAddress
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

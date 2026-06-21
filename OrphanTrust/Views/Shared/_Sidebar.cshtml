@@ -1,0 +1,97 @@
+﻿@using OrphanTrust.Infrastructure.Constants
+
+@{
+    string role = Session["UserRole"] != null
+        ? Session["UserRole"].ToString() : "";
+    string ctrl = ViewContext.RouteData.Values["controller"].ToString();
+    string action = ViewContext.RouteData.Values["action"].ToString();
+}
+
+@if (role == RoleConstants.SuperAdmin)
+{
+    <div class="sidebar-section">Main</div>
+    <a href="@Url.Action("SuperAdminDashboard","Dashboard")"
+       class="nav-link @(action == "SuperAdminDashboard" ? "active" : "")">
+        <i class="bi bi-speedometer2"></i> Dashboard
+    </a>
+
+    <div class="sidebar-section">Management</div>
+    <a href="@Url.Action("Index","Orphanages")"
+       class="nav-link @(ctrl == "Orphanages" ? "active" : "")">
+        <i class="bi bi-house-heart"></i> Orphanages
+    </a>
+    <a href="@Url.Action("Index","Donations")"
+       class="nav-link @(ctrl == "Donations" ? "active" : "")">
+        <i class="bi bi-cash-coin"></i> Donations
+    </a>
+    <a href="@Url.Action("Index","Distributions")"
+       class="nav-link @(ctrl == "Distributions" ? "active" : "")">
+        <i class="bi bi-send-check"></i> Distributions
+    </a>
+
+    <div class="sidebar-section">Blockchain</div>
+    <a href="@Url.Action("Index","Blockchain")"
+       class="nav-link @(ctrl == "Blockchain" ? "active" : "")">
+        <i class="bi bi-link-45deg"></i> Blockchain
+    </a>
+
+    <div class="sidebar-section">System</div>
+    <a href="@Url.Action("Index","AuditLogs")"
+       class="nav-link @(ctrl == "AuditLogs" ? "active" : "")">
+        <i class="bi bi-journal-text"></i> Audit Logs
+    </a>
+}
+
+@if (role == RoleConstants.OrphanageAdmin)
+{
+    <div class="sidebar-section">Main</div>
+    <a href="@Url.Action("OrphanageAdminDashboard","Dashboard")"
+       class="nav-link @(action == "OrphanageAdminDashboard" ? "active" : "")">
+        <i class="bi bi-speedometer2"></i> Dashboard
+    </a>
+
+    <div class="sidebar-section">My Orphanage</div>
+    <a href="@Url.Action("MyOrphanage","Orphanages")"
+       class="nav-link">
+        <i class="bi bi-house-heart"></i> Profile
+    </a>
+    <a href="@Url.Action("Index","Children")"
+       class="nav-link @(ctrl == "Children" ? "active" : "")">
+        <i class="bi bi-person-hearts"></i> Children
+    </a>
+
+    <div class="sidebar-section">Finance</div>
+    <a href="@Url.Action("MyDonations","Donations")"
+       class="nav-link">
+        <i class="bi bi-cash-coin"></i> Donations
+    </a>
+}
+
+@if (role == RoleConstants.Donor)
+{
+    <div class="sidebar-section">Main</div>
+    <a href="@Url.Action("DonorDashboard","Dashboard")"
+       class="nav-link @(action == "DonorDashboard" ? "active" : "")">
+        <i class="bi bi-speedometer2"></i> Dashboard
+    </a>
+
+    <div class="sidebar-section">Donate</div>
+    <a href="@Url.Action("Index","Orphanages")"
+       class="nav-link @(ctrl == "Orphanages" ? "active" : "")">
+        <i class="bi bi-house-heart"></i> Browse Orphanages
+    </a>
+    <a href="@Url.Action("Create","Donations")"
+       class="nav-link">
+        <i class="bi bi-plus-circle"></i> Make Donation
+    </a>
+
+    <div class="sidebar-section">My Activity</div>
+    <a href="@Url.Action("MyDonations","Donations")"
+       class="nav-link">
+        <i class="bi bi-cash-coin"></i> My Donations
+    </a>
+    <a href="@Url.Action("Verify","Blockchain")"
+       class="nav-link">
+        <i class="bi bi-shield-check"></i> Verify on Chain
+    </a>
+}

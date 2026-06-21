@@ -1,0 +1,119 @@
+﻿@model IEnumerable<OrphanTrust.Models.DomainModels.Donation>
+@{
+    ViewBag.Title = "My Impact";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-header">
+    <h2><i class="bi bi-heart-pulse me-2"></i>My Impact</h2>
+    <p class="text-muted mb-0 small">
+        Your contribution to Tanzania's children
+    </p>
+</div>
+
+<!-- Impact Stats -->
+<div class="row g-3 mb-4">
+    <div class="col-md-4">
+        <div class="stat-card"
+             style="background:linear-gradient(135deg,#2E7D32,#43A047);">
+            <div class="stat-label">Total Donated</div>
+            <div class="stat-number">
+                TZS @String.Format("{0:N0}", ViewBag.TotalAmount)
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="stat-card"
+             style="background:linear-gradient(135deg,#E65100,#F57C00);">
+            <div class="stat-label">Total Donations</div>
+            <div class="stat-number">@ViewBag.TotalCount</div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="stat-card"
+             style="background:linear-gradient(135deg,#1565C0,#1976D2);">
+            <div class="stat-label">Orphanages Supported</div>
+            <div class="stat-number">@ViewBag.Orphanages</div>
+        </div>
+    </div>
+</div>
+
+<!-- Blockchain verified donations -->
+<div class="card">
+    <div class="card-header py-3">
+        <i class="bi bi-link-45deg me-2 text-success"></i>
+        Blockchain Verified Donations
+    </div>
+    <div class="card-body p-0">
+        @if (Model != null && Model.Any())
+        {
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead style="background:#f8fdf8;">
+                        <tr>
+                            <th class="ps-4">ID</th>
+                            <th>Orphanage</th>
+                            <th>Amount</th>
+                            <th>TX Hash</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var d in Model)
+                        {
+                            <tr>
+                                <td class="ps-4 fw-medium">
+                                    #@d.DonationId
+                                </td>
+                                <td>
+                                    @(d.Orphanage != null
+                                        ? d.Orphanage.Name : "N/A")
+                                </td>
+                                <td class="fw-bold text-success">
+                                    @d.Currency
+                                    @String.Format("{0:N0}", d.Amount)
+                                </td>
+                                <td>
+                                    @if (!string.IsNullOrEmpty(d.TxHash))
+                                    {
+                                        <a href="https://testnet.snowtrace.io/tx/@d.TxHash"
+                                           target="_blank"
+                                           class="badge bg-success
+                                                  text-decoration-none">
+                                            <i class="bi bi-shield-check me-1"></i>
+                                            View on Chain
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-warning
+                                                     text-dark">
+                                            Pending
+                                        </span>
+                                    }
+                                </td>
+                                <td class="text-muted small">
+                                    @d.CreatedAt.ToString("MMM dd, yyyy")
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <div class="text-center py-5">
+                <i class="bi bi-heart-pulse"
+                   style="font-size:4rem;color:#c8e6c9;"></i>
+                <p class="text-muted mt-3">
+                    No confirmed donations yet.
+                </p>
+                <a href="@Url.Action("Create","Donations")"
+                   class="btn btn-primary">
+                    <i class="bi bi-heart me-1"></i>Make a Donation
+                </a>
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,177 @@
+﻿@model OrphanTrust.Models.DomainModels.Orphanage
+@{
+    ViewBag.Title = "Add Orphanage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-header">
+    <h2><i class="bi bi-plus-circle me-2"></i>Add New Orphanage</h2>
+    <p class="text-muted mb-0 small">Register a new orphanage on the platform</p>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header py-3">
+                <i class="bi bi-house-heart me-2 text-success"></i>
+                Orphanage Details
+            </div>
+            <div class="card-body p-4">
+
+                @using (Html.BeginForm("Create", "Orphanages", FormMethod.Post))
+                {
+                    <div class="row g-3">
+
+                        <div class="col-md-12">
+                            <label class="form-label fw-medium">
+                                Orphanage Name <span class="text-danger">*</span>
+                            </label>
+                            @Html.TextBoxFor(m => m.Name,
+                                new
+                                     {
+                                    @class = "form-control",
+                                    placeholder = "e.g. Dar es Salaam Hope Center"
+                                })
+                            @Html.ValidationMessageFor(m => m.Name,
+                                "", new { @class = "text-danger small" })
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-medium">
+                                Region <span class="text-danger">*</span>
+                            </label>
+                            @Html.DropDownListFor(m => m.Region,
+                                new SelectList(new[] {
+                                    "Dar es Salaam","Dodoma","Mwanza",
+                                    "Arusha","Mbeya","Morogoro","Tanga",
+                                    "Zanzibar","Kilimanjaro","Kigoma",
+                                    "Tabora","Ruvuma","Iringa","Mara",
+                                    "Shinyanga","Kagera","Lindi","Mtwara",
+                                    "Singida","Rukwa","Katavi","Njombe",
+                                    "Simiyu","Geita","Songwe"
+                                }),
+                                "-- Select Region --",
+                                new { @class = "form-select" })
+                            @Html.ValidationMessageFor(m => m.Region,
+                                "", new { @class = "text-danger small" })
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-medium">
+                                Registration Number <span class="text-danger">*</span>
+                            </label>
+                            @Html.TextBoxFor(m => m.RegistrationNumber,
+                                new
+                                     {
+                                    @class = "form-control",
+                                    placeholder = "e.g. TZ-ORG-2024-001"
+                                })
+                            @Html.ValidationMessageFor(m => m.RegistrationNumber,
+                                "", new { @class = "text-danger small" })
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="form-label fw-medium">
+                                Address <span class="text-danger">*</span>
+                            </label>
+                            @Html.TextBoxFor(m => m.Address,
+                                new
+                                     {
+                                    @class = "form-control",
+                                    placeholder = "Full physical address"
+                                })
+                            @Html.ValidationMessageFor(m => m.Address,
+                                "", new { @class = "text-danger small" })
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-medium">
+                                Contact Phone
+                            </label>
+                            @Html.TextBoxFor(m => m.ContactPhone,
+                                new
+                                     {
+                                    @class = "form-control",
+                                    placeholder = "+255 XXX XXX XXX"
+                                })
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-medium">
+                                Contact Email
+                            </label>
+                            @Html.TextBoxFor(m => m.ContactEmail,
+                                new
+                                     {
+                                    @class = "form-control",
+                                    placeholder = "contact@orphanage.tz",
+                                    type = "email"
+                                })
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="form-label fw-medium">
+                                Description
+                            </label>
+                            @Html.TextAreaFor(m => m.Description,
+                                new
+                                     {
+                                    @class = "form-control",
+                                    rows = "3",
+                                    placeholder = "Brief description of the orphanage..."
+                                })
+                        </div>
+
+                        <div class="col-md-12 mt-2">
+                            <div class="d-flex gap-2">
+                                <button type="submit"
+                                        class="btn btn-primary px-4">
+                                    <i class="bi bi-check-circle me-2"></i>
+                                    Save Orphanage
+                                </button>
+                                <a href="@Url.Action("Index","Orphanages")"
+                                   class="btn btn-outline-secondary px-4">
+                                    <i class="bi bi-arrow-left me-2"></i>Cancel
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header py-3">
+                <i class="bi bi-info-circle me-2 text-info"></i>
+                Guidelines
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled small text-muted">
+                    <li class="mb-2">
+                        <i class="bi bi-check-circle text-success me-2"></i>
+                        Use the official registered name
+                    </li>
+                    <li class="mb-2">
+                        <i class="bi bi-check-circle text-success me-2"></i>
+                        Registration number must be unique
+                    </li>
+                    <li class="mb-2">
+                        <i class="bi bi-check-circle text-success me-2"></i>
+                        Orphanage will be set to Active status
+                    </li>
+                    <li class="mb-2">
+                        <i class="bi bi-check-circle text-success me-2"></i>
+                        Blockchain verification can be done after creation
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

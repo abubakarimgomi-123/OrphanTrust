@@ -1,0 +1,93 @@
+﻿@model IEnumerable<OrphanTrust.Models.DomainModels.Distribution>
+@{
+    ViewBag.Title = "Distributions";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-header">
+    <h2><i class="bi bi-send-check me-2"></i>Distributions</h2>
+    <p class="text-muted mb-0 small">All fund distributions</p>
+</div>
+
+@if (Model != null && Model.Any())
+{
+    <div class="card">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead style="background:#f8fdf8;">
+                        <tr>
+                            <th class="ps-4">ID</th>
+                            <th>Orphanage</th>
+                            <th>Amount</th>
+                            <th>Purpose</th>
+                            <th>Blockchain</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var d in Model)
+                        {
+                            <tr>
+                                <td class="ps-4 fw-medium">
+                                    #@d.DistributionId
+                                </td>
+                                <td>
+                                    @(d.Orphanage != null
+                                        ? d.Orphanage.Name : "N/A")
+                                </td>
+                                <td class="fw-bold text-success">
+                                    TZS @String.Format("{0:N0}", d.Amount)
+                                </td>
+                                <td>@d.Purpose</td>
+                                <td>
+                                    @if (!string.IsNullOrEmpty(d.TxHash))
+                                    {
+                                        <a href="https://testnet.snowtrace.io/tx/@d.TxHash"
+                                           target="_blank"
+                                           class="badge bg-success
+                                                  text-decoration-none">
+                                            <i class="bi bi-shield-check me-1"></i>
+                                            On Chain
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-warning
+                                                     text-dark">
+                                            Pending
+                                        </span>
+                                    }
+                                </td>
+                                <td>
+                                    @{
+                                        var badge = d.Status == "Completed"
+                                            ? "bg-success"
+                                            : d.Status == "Approved"
+                                                ? "bg-primary"
+                                                : "bg-warning text-dark";
+                                    }
+                                    <span class="badge @badge">
+                                        @d.Status
+                                    </span>
+                                </td>
+                                <td class="text-muted small">
+                                    @d.CreatedAt.ToString("MMM dd, yyyy")
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="text-center py-5">
+        <i class="bi bi-send-check"
+           style="font-size:4rem;color:#c8e6c9;"></i>
+        <p class="text-muted mt-3">No distributions yet.</p>
+    </div>
+}

@@ -1,0 +1,236 @@
+﻿@{
+    ViewBag.Title = "Orphanage Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-header d-flex justify-content-between align-items-center">
+    <div>
+        <h2>
+            <i class="bi bi-house-heart me-2"></i>
+            @(ViewBag.Orphanage != null
+                ? ViewBag.Orphanage.Name
+                : "My Orphanage")
+        </h2>
+        <p class="text-muted mb-0 small">
+            Orphanage Admin Dashboard —
+            @DateTime.Now.ToString("dddd, MMMM dd yyyy")
+        </p>
+    </div>
+    <div>
+        <a href="@Url.Action("MyOrphanage","Orphanages")"
+           class="btn btn-outline-success btn-sm">
+            <i class="bi bi-pencil me-1"></i>Edit Profile
+        </a>
+    </div>
+</div>
+
+<!-- Stat Cards -->
+<div class="row g-3 mb-4">
+    <div class="col-md-3 col-sm-6">
+        <div class="stat-card"
+             style="background:linear-gradient(135deg,#2E7D32,#43A047);">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <div class="stat-label">Children</div>
+                    <div class="stat-number">@ViewBag.TotalChildren</div>
+                </div>
+                <i class="bi bi-person-hearts"
+                   style="font-size:2.5rem;opacity:0.3;"></i>
+            </div>
+            <div class="mt-2" style="font-size:0.8rem;opacity:0.8;">
+                <i class="bi bi-heart me-1"></i>In our care
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 col-sm-6">
+        <div class="stat-card"
+             style="background:linear-gradient(135deg,#E65100,#F57C00);">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <div class="stat-label">Donations</div>
+                    <div class="stat-number">@ViewBag.TotalDonations</div>
+                </div>
+                <i class="bi bi-cash-coin"
+                   style="font-size:2.5rem;opacity:0.3;"></i>
+            </div>
+            <div class="mt-2" style="font-size:0.8rem;opacity:0.8;">
+                <i class="bi bi-currency-exchange me-1"></i>
+                TZS @String.Format("{0:N0}", ViewBag.TotalReceived) received
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 col-sm-6">
+        <div class="stat-card"
+             style="background:linear-gradient(135deg,#1565C0,#1976D2);">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <div class="stat-label">Open Needs</div>
+                    <div class="stat-number">@ViewBag.OpenNeeds</div>
+                </div>
+                <i class="bi bi-clipboard-heart"
+                   style="font-size:2.5rem;opacity:0.3;"></i>
+            </div>
+            <div class="mt-2" style="font-size:0.8rem;opacity:0.8;">
+                <i class="bi bi-arrow-up-circle me-1"></i>
+                Active funding needs
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 col-sm-6">
+        <div class="stat-card"
+             style="background:linear-gradient(135deg,#6A1B9A,#8E24AA);">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <div class="stat-label">Status</div>
+                    <div class="stat-number" style="font-size:1.2rem;margin-top:0.5rem;">
+                        @(ViewBag.Orphanage != null
+                            ? ViewBag.Orphanage.Status
+                            : "N/A")
+                    </div>
+                </div>
+                <i class="bi bi-shield-check"
+                   style="font-size:2.5rem;opacity:0.3;"></i>
+            </div>
+            <div class="mt-2" style="font-size:0.8rem;opacity:0.8;">
+                <i class="bi bi-patch-check me-1"></i>
+                Verification status
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="row g-3 mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header py-3">
+                <i class="bi bi-lightning-fill me-2 text-warning"></i>
+                Quick Actions
+            </div>
+            <div class="card-body">
+                <div class="row g-2">
+                    <div class="col-md-3 col-sm-6">
+                        <a href="@Url.Action("Create","Children")"
+                           class="btn btn-outline-success w-100 py-3
+                                  d-flex flex-column align-items-center gap-1">
+                            <i class="bi bi-person-plus"
+                               style="font-size:1.5rem;"></i>
+                            <small>Add Child</small>
+                        </a>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <a href="@Url.Action("Create","Needs")"
+                           class="btn btn-outline-primary w-100 py-3
+                                  d-flex flex-column align-items-center gap-1">
+                            <i class="bi bi-clipboard-plus"
+                               style="font-size:1.5rem;"></i>
+                            <small>Post a Need</small>
+                        </a>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <a href="@Url.Action("MyDonations","Donations")"
+                           class="btn btn-outline-warning w-100 py-3
+                                  d-flex flex-column align-items-center gap-1">
+                            <i class="bi bi-cash-coin"
+                               style="font-size:1.5rem;"></i>
+                            <small>View Donations</small>
+                        </a>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <a href="@Url.Action("OrphanageReport","Reports")"
+                           class="btn btn-outline-info w-100 py-3
+                                  d-flex flex-column align-items-center gap-1">
+                            <i class="bi bi-bar-chart"
+                               style="font-size:1.5rem;"></i>
+                            <small>My Reports</small>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Orphanage Info -->
+@if (ViewBag.Orphanage != null)
+{
+    <div class="card">
+        <div class="card-header py-3">
+            <i class="bi bi-house-heart me-2 text-success"></i>
+            Orphanage Details
+        </div>
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <table class="table table-borderless table-sm">
+                        <tr>
+                            <td class="text-muted" style="width:40%;">Name</td>
+                            <td class="fw-medium">@ViewBag.Orphanage.Name</td>
+                        </tr>
+                        <tr>
+                            <td class="text-muted">Region</td>
+                            <td>@ViewBag.Orphanage.Region</td>
+                        </tr>
+                        <tr>
+                            <td class="text-muted">Address</td>
+                            <td>@ViewBag.Orphanage.Address</td>
+                        </tr>
+                        <tr>
+                            <td class="text-muted">Reg. Number</td>
+                            <td>@ViewBag.Orphanage.RegistrationNumber</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-md-6">
+                    <table class="table table-borderless table-sm">
+                        <tr>
+                            <td class="text-muted" style="width:40%;">Contact</td>
+                            <td>@ViewBag.Orphanage.ContactPhone</td>
+                        </tr>
+                        <tr>
+                            <td class="text-muted">Email</td>
+                            <td>@ViewBag.Orphanage.ContactEmail</td>
+                        </tr>
+                        <tr>
+                            <td class="text-muted">Status</td>
+                            <td>
+                                @{
+                                    var status = ViewBag.Orphanage.Status as string;
+                                    var badgeClass = status == "Active"
+                                        ? "bg-success"
+                                        : status == "Pending"
+                                            ? "bg-warning text-dark"
+                                            : "bg-danger";
+                                }
+                                <span class="badge @badgeClass">
+                                    @ViewBag.Orphanage.Status
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-muted">Blockchain</td>
+                            <td>
+                                @if (ViewBag.Orphanage.IsVerifiedOnChain)
+                                {
+                                    <span class="badge bg-success">
+                                        <i class="bi bi-shield-check me-1"></i>
+                                        Verified
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">
+                                        Not verified
+                                    </span>
+                                }
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}
