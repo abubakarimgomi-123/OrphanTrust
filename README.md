@@ -274,7 +274,7 @@ OrphanTrust/
 ![Landing Page](./OrphanTrust/imgs/lading-page.png)
 
 ### Super Admin Dashboard
-![Dashboard](screenshots/dashboard.png)
+![Dashboard](./OrphanTrust/imgs/superadmin.png)
 
 ### Orphanage Management
 ![Orphanages](screenshots/orphanages.png)
@@ -283,10 +283,10 @@ OrphanTrust/
 ![Donation](screenshots/donation.png)
 
 ### Blockchain Receipt
-![Receipt](screenshots/receipt.png)
+![Receipt](./OrphanTrust/imgs/./OrphanTrust/imgs/)
 
 ### Snowtrace Explorer - Live Transaction
-![Snowtrace](screenshots/snowtrace.png)
+![Snowtrace](./OrphanTrust/imgs/snowface.png)
 
 ---
 
