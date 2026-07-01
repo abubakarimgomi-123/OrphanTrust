@@ -271,7 +271,7 @@ OrphanTrust/
 ## Screenshots
 
 ### Landing Page
-![Landing Page](screenshots/landing.png)
+![Landing Page](./OrphanTrust/imgs/lading-page.png)
 
 ### Super Admin Dashboard
 ![Dashboard](screenshots/dashboard.png)
