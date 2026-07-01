@@ -283,7 +283,7 @@ OrphanTrust/
 ![Donation](screenshots/donation.png)
 
 ### Blockchain Receipt
-![Receipt](./OrphanTrust/imgs/./OrphanTrust/imgs/)
+![Receipt](./OrphanTrust/imgs/receipt.png)
 
 ### Snowtrace Explorer - Live Transaction
 ![Snowtrace](./OrphanTrust/imgs/snowface.png)
