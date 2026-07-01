@@ -293,7 +293,7 @@ OrphanTrust/
 ## Demo
 
 > **Live Demo:** http://localhost:44323 (run locally)
-> **GitHub:** https://github.com/[your-username]/OrphanTrust
+> **GitHub:** https://github.com/abubakarimgomi-123/OrphanTrust
 > **Demo Video:** [YouTube Link]
 
 ---
