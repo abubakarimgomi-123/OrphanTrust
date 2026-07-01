@@ -277,7 +277,7 @@ OrphanTrust/
 ![Dashboard](./OrphanTrust/imgs/superadmin.png)
 
 ### Orphanage Management
-![Orphanages](screenshots/orphanages.png)
+![Orphanages](./OrphanTrust/imgs/landing-page2(4).png)
 
 ### Make a Donation
 ![Donation](screenshots/donation.png)
